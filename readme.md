@@ -1,0 +1,1 @@
+Can't talk to girls? Feel like a loser? Want to get more social confidence? Well, you've come to the wrong place I can't lie go somewhere else. This app is a beginner's opencv application that detects facial movements to gauge confidence and gives you the must needed and slightly unhinged responses that will wow your date, or get you a restraining order
