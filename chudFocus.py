@@ -67,8 +67,6 @@ with vision.FaceLandmarker.create_from_options(options) as landmarker:
         cv2.imshow('Annotated Face', annotated_image)
         if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-        elif cv2.waitKey(1) & 0xFF == ord('w'):
-             cv2.imwrite("MMogged.jpg", annotated_image)
 
 cap.release()
 cv2.destroyAllWindows()
