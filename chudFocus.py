@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+import json
 from deepface import DeepFace
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
@@ -7,7 +8,7 @@ from mediapipe.tasks.python.vision import drawing_utils as mp_drawing
 from mediapipe.tasks.python.vision import drawing_styles as mp_drawing_styles
 
 latest_result = None
-detector = 'mediapipe'
+backend = 'mediapipe'
 MODEL_PATH = 'ChudFocus\\face_landmarker.task' 
 
 
@@ -29,7 +30,6 @@ with vision.FaceLandmarker.create_from_options(options) as landmarker:
     while True: 
         _, frame = cap.read()
         frame_timestamp_ms = int((cv2.getTickCount() - start_time) * 1000 / cv2.getTickFrequency())
-        
         rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_image)
         landmarker.detect_async(mp_image, frame_timestamp_ms)
@@ -61,10 +61,10 @@ with vision.FaceLandmarker.create_from_options(options) as landmarker:
                     connections=vision.FaceLandmarksConnections.FACE_LANDMARKS_RIGHT_IRIS,
                     landmark_drawing_spec=None,
                     connection_drawing_spec=mp_drawing_styles.get_default_face_mesh_iris_connections_style())
-                result = DeepFace.analyze (img_path=annotated_image, actions=['emotion'])
-                print(result)
-
-        cv2.imshow('Annotated Face', annotated_image)
+        
+        results = DeepFace.analyze(annotated_image, actions=['emotion'], enforce_detection=False)
+        cv2.imshow("Webcam", annotated_image)
+        
         if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
